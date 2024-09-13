@@ -12,3 +12,10 @@ class Student(models.Model):
 
 class Product(models.Model):
     pass
+
+class Car(models.Model):
+    car_name = models.CharField(max_length=500)
+    speed = models.IntegerField(default=80)
+
+    def __str__(self) -> str:
+        return self.car_name
