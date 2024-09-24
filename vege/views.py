@@ -21,3 +21,14 @@ def recipes(request):
 
         print(f'recipeName: {recipeName}, recipeDescription: {recipeDescription}, recipeImage: {recipeImage}')
         return JsonResponse({'recipe_name': recipeName, 'recipe_des': recipeDescription, 'recipe_img': str(recipeImage)})
+    
+    # for get recipes
+    if request.method == 'GET':
+        queryset = Recipe.objects.all()
+        recipeList = []            
+        for recipe in queryset:
+            print(f'recipeName: {recipe.recipe_name}, recipeDescription: {recipe.recipe_des}, recipeImage: {recipe.recipe_img}')
+            recipeList.append({'recipe_name': recipe.recipe_name, 'recipe_des': recipe.recipe_des, 'recipe_img': str(recipe.recipe_img)})
+
+        return JsonResponse({"data": recipeList})
+

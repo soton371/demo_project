@@ -19,8 +19,21 @@ from django.urls import path # type: ignore
 from home.views import *
 from vege.views import *
 
+from django.conf.urls.static import static # type: ignore
+from django.conf import settings # type: ignore
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns # type: ignore
+
 urlpatterns = [
     path('', home, name='home'),
     path('recipe', recipes),
     path('admin/', admin.site.urls),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += staticfiles_urlpatterns()
+
+
+# for image view http://127.0.0.1:8000/media/recipe/download.jpeg
