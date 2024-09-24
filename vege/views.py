@@ -28,7 +28,18 @@ def recipes(request):
         recipeList = []            
         for recipe in queryset:
             print(f'recipeName: {recipe.recipe_name}, recipeDescription: {recipe.recipe_des}, recipeImage: {recipe.recipe_img}')
-            recipeList.append({'recipe_name': recipe.recipe_name, 'recipe_des': recipe.recipe_des, 'recipe_img': str(recipe.recipe_img)})
+            recipeList.append({
+                'id': recipe.id,
+                'recipe_name': recipe.recipe_name, 'recipe_des': recipe.recipe_des, 'recipe_img': str(recipe.recipe_img)})
 
-        return JsonResponse({"data": recipeList})
+        return JsonResponse({"data": recipeList}, status=200)
 
+
+@csrf_exempt
+def delete_recipe(request, id):
+    print(f'id: {id}')
+    if request.method == "DELETE":
+        queryset = Recipe.objects.get(id = id)
+        queryset.delete()
+        return JsonResponse({'message': 'Delete recipe '+str(id)}, status=200)
+    
