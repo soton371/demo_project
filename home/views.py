@@ -1,6 +1,5 @@
-from django.shortcuts import render # type: ignore
-from django.http import HttpResponse # type: ignore
+from django.http import JsonResponse # type: ignore
 
 # Create your views here.
 def home(request):
-    return HttpResponse("Start django server")
+    return JsonResponse({"name":"Start django server"})
