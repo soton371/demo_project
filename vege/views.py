@@ -43,3 +43,20 @@ def delete_recipe(request, id):
         queryset.delete()
         return JsonResponse({'message': 'Delete recipe '+str(id)}, status=200)
     
+@csrf_exempt
+def update_recipe(request, id):
+    if request.method == "POST":
+        queryset = Recipe.objects.get(id = id)
+        data = request.POST
+        recipeName = data.get('recipe_name')
+        recipeDescription = data.get('recipe_des')
+        recipeImage = request.FILES.get('recipe_img')
+
+        queryset.recipe_name = recipeName
+        queryset.recipe_des = recipeDescription
+
+        if recipeImage:
+            queryset.recipe_img = recipeImage
+
+        queryset.save()
+        return JsonResponse({'message': 'Update recipe '+str(id)}, status=200)
